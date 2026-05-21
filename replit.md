@@ -19,10 +19,23 @@ Because it needs real hardware (EEG headset + audio), it cannot run interactivel
 ## Running locally (with hardware)
 
 ```bash
+# Graphical launcher (Tkinter) — default when no args are given
+python main.py
+python main.py --gui
+
+# Or run a mode directly from the CLI
 python main.py --mode music --preset ambient
 python main.py --mode study --config configs/study/default.yaml --subject S01
 python main.py --list-streams
 ```
+
+The Tkinter GUI (`src/ui/gui.py`) provides:
+- Tabs for music and study modes
+- Music preset picker with description preview
+- Study config picker (dropdown + Browse…) and subject ID entry
+- "List LSL streams" button to scan for Emotiv streams
+- Start/Stop session controls with a live status indicator
+- A scrolling session log that captures stdout from the running mode
 
 See `README.md` for full usage and config documentation.
 

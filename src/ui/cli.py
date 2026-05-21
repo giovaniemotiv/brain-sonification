@@ -28,8 +28,14 @@ Examples:
     parser.add_argument(
         "--mode",
         choices=["music", "study"],
-        required=True,
-        help="Run mode: 'music' (automatic preset) or 'study' (research pipeline)",
+        default=None,
+        help="Run mode: 'music' (automatic preset) or 'study' (research pipeline). "
+             "Omit to launch the Tkinter GUI.",
+    )
+    parser.add_argument(
+        "--gui",
+        action="store_true",
+        help="Force-launch the Tkinter GUI (default when no other args are given)",
     )
     parser.add_argument(
         "--preset",

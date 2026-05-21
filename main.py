@@ -20,6 +20,11 @@ def main():
     parser = build_parser()
     args = parser.parse_args()
 
+    if args.gui or len(sys.argv) == 1:
+        from src.ui.gui import launch
+        launch()
+        return
+
     if args.list_streams:
         print_streams()
         return
