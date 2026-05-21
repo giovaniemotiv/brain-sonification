@@ -9,3 +9,11 @@ PyQt5>=5.15
 pytest>=7.4
 h5py>=3.9
 librosa>=0.10
+h5py
+numpy
+pandas
+pylsl
+pytest
+pyyaml
+scipy
+sounddevice
