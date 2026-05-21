@@ -1,0 +1,43 @@
+modules = ["python-3.12"]
+[agent]
+expertMode = true
+stack = "BEST_EFFORT_FALLBACK"
+
+[nix]
+channel = "stable-25_05"
+packages = ["ffmpeg-full", "freefont_ttf", "glibcLocales", "hdf5", "libxcrypt", "libyaml", "openssh", "pkg-config", "portaudio", "xsimd"]
+
+[[ports]]
+localPort = 16572
+externalPort = 80
+
+[[ports]]
+localPort = 16573
+externalPort = 3000
+
+[[ports]]
+localPort = 16574
+externalPort = 3001
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python -m pytest tests/test_mapper.py tests/test_smoothing.py -v"
+
+[workflows.workflow.metadata]
+outputType = "console"
