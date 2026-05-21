@@ -1,0 +1,19 @@
+mode: music
+preset: melodic
+description: "EEG drives actual notes and chord progressions in a tonal scale"
+
+audio:
+  sample_rate: 44100
+  buffer_size: 256
+
+voices: [drone, pad, sparkle]
+key: A
+scale: dorian
+smoothing_alpha: 0.2
+chord_bpm: 40               # chord changes every 1.5 seconds
+
+mapping:
+  alpha: pitch              # alpha → melody note selection in scale
+  engagement: rhythm        # engagement → chord progression tempo
+  stress: dissonance        # stress → harmonic tension
+  focus: atmosphere         # focus → timbre clarity

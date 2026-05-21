@@ -1,0 +1,19 @@
+mode: music
+preset: rhythmic
+description: "EEG drives beat intensity, BPM, and filter sweeps — generative electronic feel"
+
+audio:
+  sample_rate: 44100
+  buffer_size: 256
+
+voices: [drone, perc, sparkle]
+key: E
+scale: pentatonic_minor
+smoothing_alpha: 0.3        # faster response for rhythmic feel
+chord_bpm: 60
+
+mapping:
+  engagement: rhythm        # engagement → BPM and beat intensity
+  stress: intensity         # stress → drive/energy
+  alpha: atmosphere         # alpha → filter sweep character
+  gamma: pitch              # gamma → sparkle pitch selection

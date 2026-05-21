@@ -1,0 +1,43 @@
+mode: study
+description: "Default study config — simple starting point, one band per voice parameter"
+
+calibration_seconds: 30
+streams: [bandpower, performance]
+smoothing_alpha: 0.25
+tick_rate_hz: 20
+
+audio:
+  sample_rate: 44100
+  buffer_size: 256
+
+voices: [drone, pad, perc, sparkle]
+
+mapping:
+  bandpower:
+    # Maps aggregate band power (index 0-5 correspond to theta,alpha_l,alpha_h,beta_l,beta_h,gamma)
+    "bandpower[1]":
+      target: drone.cutoff
+      range: [200, 2000]
+      curve: logarithmic
+    "bandpower[2]":
+      target: pad.freq
+      range: [110, 440]
+      curve: linear
+    "bandpower[5]":
+      target: sparkle.mul
+      range: [0.0, 0.3]
+      curve: exponential
+  performance:
+    "performance[0]":            # engagement
+      target: drone.mul
+      range: [0.05, 0.4]
+      curve: linear
+    "performance[2]":            # stress
+      target: drone.detune
+      range: [1.0, 10.0]
+      curve: scurve
+
+logging:
+  enabled: true
+  format: hdf5
+  save_audio: true

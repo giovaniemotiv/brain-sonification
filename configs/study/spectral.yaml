@@ -1,0 +1,60 @@
+mode: study
+description: "Direct spectral mapping — pitch-shifts EEG bands into audible range, 'what does the signal sound like'"
+
+calibration_seconds: 30
+streams: [bandpower]
+smoothing_alpha: 0.4          # faster response for spectral feel
+tick_rate_hz: 30
+
+audio:
+  sample_rate: 44100
+  buffer_size: 256
+
+voices: [drone, pad, perc, sparkle]
+
+# Each EEG frequency band maps to a corresponding audible voice
+# Delta (0.5-4 Hz)   → drone (sub-bass)
+# Theta (4-8 Hz)     → drone (bass)
+# Alpha (8-12 Hz)    → pad (mid)
+# Beta (12-30 Hz)    → perc (high-mid)
+# Gamma (30-45 Hz)   → sparkle (high)
+
+mapping:
+  bandpower:
+    "bandpower[0]":            # theta
+      target: drone.freq
+      range: [40, 120]
+      curve: linear
+    "bandpower[0]":
+      target: drone.mul
+      range: [0.0, 0.5]
+      curve: linear
+    "bandpower[2]":            # alpha_high
+      target: pad.freq
+      range: [120, 480]
+      curve: linear
+    "bandpower[2]":
+      target: pad.mul
+      range: [0.0, 0.4]
+      curve: linear
+    "bandpower[3]":            # beta_low
+      target: perc.center_freq
+      range: [400, 2000]
+      curve: linear
+    "bandpower[3]":
+      target: perc.mul
+      range: [0.0, 0.3]
+      curve: exponential
+    "bandpower[5]":            # gamma
+      target: sparkle.carrier_freq
+      range: [1000, 4000]
+      curve: linear
+    "bandpower[5]":
+      target: sparkle.mul
+      range: [0.0, 0.25]
+      curve: exponential
+
+logging:
+  enabled: true
+  format: hdf5
+  save_audio: false

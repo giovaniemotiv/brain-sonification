@@ -1,0 +1,18 @@
+mode: music
+preset: ambient
+description: "Slow evolving drone and pad textures driven by alpha waves and engagement"
+
+audio:
+  sample_rate: 44100
+  buffer_size: 256
+
+voices: [drone, pad]
+key: C
+scale: pentatonic_minor
+smoothing_alpha: 0.1        # very smooth, slow response
+chord_bpm: 20               # chord changes every 3 seconds
+
+mapping:
+  alpha: atmosphere         # alpha → drone cutoff + pad modulation rate
+  engagement: intensity     # engagement → overall volume/energy
+  stress: dissonance        # stress → detune + mod depth

@@ -1,0 +1,70 @@
+mode: study
+description: "Frontal Alpha Asymmetry (FAA) — maps left-right alpha to stereo balance and mode"
+
+calibration_seconds: 60
+streams: [bandpower, performance]
+smoothing_alpha: 0.2
+tick_rate_hz: 20
+
+audio:
+  sample_rate: 44100
+  buffer_size: 256
+
+voices: [drone, pad, sparkle]
+
+# FAA: AF3 = left frontal, AF4 = right frontal
+# Higher left alpha → more right-hemisphere dominance → withdrawal motivation
+# Higher right alpha → more left-hemisphere dominance → approach motivation
+# FAA = ln(AF4.alpha) - ln(AF3.alpha), positive = approach
+
+mapping:
+  bandpower:
+    AF3.alpha:
+      target: drone.pan
+      range: [1.0, -1.0]       # left alpha high → pan right (contralateral)
+      curve: linear
+    AF4.alpha:
+      target: pad.pan
+      range: [-1.0, 1.0]       # right alpha high → pan left (contralateral)
+      curve: linear
+    AF3.alpha:
+      target: drone.cutoff
+      range: [300, 1800]
+      curve: logarithmic
+    AF4.alpha:
+      target: pad.freq
+      range: [110, 330]
+      curve: linear
+
+  performance:
+    engagement:
+      target: drone.mul
+      range: [0.05, 0.45]
+      curve: linear
+    stress:
+      target: drone.detune
+      range: [1.0, 8.0]
+      curve: scurve
+    relaxation:
+      target: pad.mod_depth
+      range: [0.0, 0.5]
+      curve: linear
+
+  events:
+    alpha_spike_left:
+      source: AF3.alpha
+      threshold: 1.8            # std devs above baseline
+      direction: above
+      trigger: sparkle
+      cooldown: 2.0
+    alpha_spike_right:
+      source: AF4.alpha
+      threshold: 1.8
+      direction: above
+      trigger: sparkle
+      cooldown: 2.0
+
+logging:
+  enabled: true
+  format: hdf5
+  save_audio: true
